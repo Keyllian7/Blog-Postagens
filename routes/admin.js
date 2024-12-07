@@ -2,11 +2,11 @@ const express = require('express')
 const router = express.Router()
 
 router.get('/', (req, res) => {
-    res.send("Página principal do painel ADM")
+    res.render("admin/index")
 })
 
 router.get('/posts', (req, res) => {
-    res.send("Página de posts")
+    res.render("admin/posts")
 })
 
 router.get('/categorias', (req, res) => {
