@@ -6,8 +6,29 @@ const app = express()
 const admin = require('./routes/admin')
 const path = require('path');
 const mongoose = require('mongoose')
+const session = require('express-session')
+const flash = require('connect-flash')
 
 // Configurações
+
+    // Dotenv
+    require('dotenv').config();
+
+    // Sessão
+    app.use(session({
+        secret: process.env.SECRET_PASSWORD,
+        resave: true,
+        saveUninitialized: true
+    }))
+    app.use(flash())
+
+    // Middleware
+    app.use((req, res, next) => {
+        res.locals.mensagem_sucesso = req.flash("mensagem_sucesso")
+        res.locals.mensagem_erro = req.flash("mensagem_erro")
+        next()
+    })
+
 
     // Body parse
     app.use(bodyParser.urlencoded({extended: true}))
@@ -30,6 +51,10 @@ const mongoose = require('mongoose')
     app.use(express.static(path.join(__dirname, "public")))
 
     // Outras configurações
+    app.use((req, res, next) => {
+        console.log("Middleware ativo!")
+        next()
+    })
 
 // Rotas
     app.use('/admin', admin)
