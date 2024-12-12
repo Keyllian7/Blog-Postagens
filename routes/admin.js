@@ -43,6 +43,10 @@ router.post('/categorias/nova', (req, res) => {
         erros.push({texto: "Nome da categoria muito pequeno!"})
     }
 
+    if(req.body.slug.length < 2){
+        erros.push({texto: "Slug da categoria muito pequeno!"})
+    }
+
     if(erros.length > 0){
         res.render("admin/adicionar-categorias", {erros: erros})
     } else {
