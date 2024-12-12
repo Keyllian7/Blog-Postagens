@@ -165,4 +165,43 @@ router.post('/postagens/nova', (req, res) => {
     }
 })
 
+router.get('/postagens/editar/:id', (req, res) => {
+
+    Postagem.findOne({ _id: req.params.id }).then((postagem) => {
+        Categoria.find().then((categorias) => {
+            res.render("admin/editar-postagens", { categorias: categorias, postagem: postagem })
+        }).catch((err) => {
+            req.flash("mensagem_erro", "Erro ao listar categorias")
+            res.redirect("/admin/postagens")
+        })
+    }).catch((err) => {
+        req.flash("mensagem_erro", "Esta postagem não existe")
+        res.redirect("/admin/postagens")
+    })
+
+})
+
+router.post('/postagens/editar', (req, res) => {
+
+    Postagem.findOne({_id: req.body.id}).then((postagem) => {
+
+        Postagem.titulo = req.body.titulo,
+            postagem.descricao = req.body.descricao,
+            postagem.conteudo = req.body.conteudo,
+            postagem.categoria = req.body.categoria,
+
+            postagem.save().then(() => {
+                req.flash("mensagem_sucesso", "Postagem editada com sucesso")
+                res.redirect("/admin/postagens")
+            }).catch((err) => {
+                req.flash("mensagem_erro", "Erro ao salvar edição da postagem")
+                res.redirect("/admin/postagens")
+
+            }).catch((err) => {
+                req.flash("mensagem_erro", "Erro ao editar postagem")
+                res.redirect("/admin/postagens")
+            })
+    })
+})
+
 module.exports = router
