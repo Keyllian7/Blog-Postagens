@@ -115,6 +115,22 @@ router.get('/postagens/adicionar', (req, res) => {
 router.post('/postagens/nova', (req, res) => {
     var erros = []
 
+    if(!req.body.titulo || typeof req.body.titulo == undefined || req.body.titulo == null || req.body.titulo.length < 2){ 
+        erros.push({texto: "Título inválido ou muito curto!"}) 
+    }
+
+    if(!req.body.slug || typeof req.body.slug == undefined || req.body.slug == null || req.body.slug.length < 2){ 
+        erros.push({texto: "Slug inválido ou muito curto!"}) 
+    }
+
+    if(!req.body.descricao || typeof req.body.descricao == undefined || req.body.descricao == null || req.body.descricao.length < 2){ 
+        erros.push({texto: "Descrição inválida ou muito curto!"}) 
+    }
+
+    if(!req.body.conteudo || typeof req.body.conteudo == undefined || req.body.conteudo == null || req.body.conteudo.length < 2){ 
+        erros.push({texto: "Conteúdo inválido ou muito curto!"}) 
+    }
+
     if(req.body.categoria == "0"){
         erros.push({texto: "Categoria inválida, registre uma categoria"})
     }
