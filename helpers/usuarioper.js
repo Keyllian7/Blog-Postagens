@@ -1,7 +1,7 @@
 module.exports = {
     permissaoUsuario: function (req, res, next) {
 
-        if (req.isAuthenticated() && req.user.permissao == 0) {
+        if (req.isAuthenticated() && (req.user.permissao == 0 || req.user.permissao == 1)) {
             return next()
         }
 

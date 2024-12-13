@@ -1,8 +1,12 @@
-<h4>Categorias: </h4>
-<hr>
+<h4 class="text-black mb-3">Postagens por Categorias:</h4>
+<hr class="mb-4">
 
-{{#each categorias}}
-  <a href="/categorias/{{slug}}"><h5>{{nome}}</h5></a>
-{{else}}
-
-{{/each}}
+<div class="list-group">
+  {{#each categorias}}
+    <a href="/categorias/{{slug}}" class="list-group-item list-group-item-action">
+      <h5 class="mb-0">{{nome}}</h5>
+    </a>
+  {{else}}
+    <p class="text-muted">Nenhuma categoria disponível.</p>
+  {{/each}}
+</div>
