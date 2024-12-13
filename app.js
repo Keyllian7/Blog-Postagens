@@ -77,6 +77,20 @@ const Postagem = mongoose.model('postagens')
         res.send("Lista de postagens")
     })
 
+    app.get('/postagem/:slug', (req, res) => {
+        Postagem.findOne({slug: req.params.slug}).then((postagem) => {
+            if(postagem){
+                res.render("post/index", {postagem: postagem})
+            }else{
+                req.flash("mensagem_erro", "Esta postagem não existe")
+                res.redirect("/")
+            }
+        }).catch((err) => {
+            req.flash(mensagem_erro, "Houve um erro interno")
+            res.redirect("/")
+        })
+    })
+
 
     app.use('/admin', admin)
 // Outros
