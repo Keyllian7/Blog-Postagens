@@ -38,6 +38,7 @@ require('./config/auth')(passport)
         res.locals.mensagem_sucesso = req.flash("mensagem_sucesso")
         res.locals.mensagem_erro = req.flash("mensagem_erro")
         res.locals.error = req.flash("error")
+        res.locals.user = req.user || null
         next()
     })
 
