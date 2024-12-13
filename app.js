@@ -15,7 +15,7 @@ const Categoria = mongoose.model('categorias')
 const usuarios = require('./routes/usuario')
 const passport = require('passport');
 require('./config/auth')(passport)
-const {permissaoUsuario} = require("./helpers/usuarioper")
+const {permissaoUsuario} = require("./helpers/permissoesUsuario")
 
 // Configurações
 
@@ -85,7 +85,7 @@ const {permissaoUsuario} = require("./helpers/usuarioper")
         res.send("Erro 404!")
     })
 
-    app.get('/postagem/:slug', permissaoUsuario, permissaoUsuario, (req, res) => {
+    app.get('/postagem/:slug', permissaoUsuario, (req, res) => {
         Postagem.findOne({slug: req.params.slug}).then((postagem) => {
             if(postagem){
                 res.render("post/index", {postagem: postagem})
