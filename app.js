@@ -8,6 +8,8 @@ const path = require('path');
 const mongoose = require('mongoose')
 const session = require('express-session')
 const flash = require('connect-flash')
+require('./models/Postagem')
+const Postagem = mongoose.model('postagens')
 
 // Configurações
 
@@ -57,6 +59,25 @@ const flash = require('connect-flash')
     })
 
 // Rotas
+
+    app.get('/', (req, res) => {
+        Postagem.find().populate("categoria").sort({data: "desc"}).then((postagens) => {
+            res.render("index", {postagens: postagens})
+        }).catch((err) => {
+            req.flash("mensagem_erro", "Houve um erro ao listar as postagens")
+            res.redirect("/404")
+        })
+    })
+
+    app.get('/404', (req, res) => {
+        res.send("Erro 404!")
+    })
+
+    app.get('/posts', (req, res) => {
+        res.send("Lista de postagens")
+    })
+
+
     app.use('/admin', admin)
 // Outros
 const port = 8081
