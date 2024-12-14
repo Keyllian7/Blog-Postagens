@@ -16,6 +16,7 @@ const usuarios = require('./routes/usuario')
 const passport = require('passport');
 require('./config/auth')(passport)
 const {permissaoUsuario} = require("./helpers/permissoesUsuario")
+const db = require('./config/db')
 
 // Configurações
 
@@ -55,7 +56,7 @@ const {permissaoUsuario} = require("./helpers/permissoesUsuario")
 
     // Mongoose
         mongoose.Promise = global.Promise;
-        mongoose.connect('mongodb://localhost/blogapp').then(() => {
+        mongoose.connect(db.MONGO_URI).then(() => {
             console.log("Conectado ao banco de dados com sucesso!")
         }).catch((err) => {
             console.log("Erro ao se conectar ao banco de dados: " + err)
@@ -134,5 +135,5 @@ const {permissaoUsuario} = require("./helpers/permissoesUsuario")
 // Outros
 const port = process.env.PORT || 8081
 app.listen(port, () => {
-    console.log("Servidor online! http://localhost:8081")
+    console.log("Servidor online!")
 })
