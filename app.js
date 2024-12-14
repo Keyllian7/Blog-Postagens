@@ -132,7 +132,7 @@ const {permissaoUsuario} = require("./helpers/permissoesUsuario")
     app.use('/usuarios', usuarios)
     
 // Outros
-const port = 8081
+const port = process.env.PORT || 8081
 app.listen(port, () => {
     console.log("Servidor online! http://localhost:8081")
 })
